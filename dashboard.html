@@ -93,19 +93,29 @@
                 </div>
             </div>
 
-            <!-- ⭐ PAYMENT DETAILS - EDIT YOUR BANK INFO HERE ⭐ -->
+            <!-- ⭐ PAYMENT DETAILS - NOW FULLY VISIBLE ⭐ -->
             <div class="dashboard-section" id="paymentDetails">
                 <h2>💳 Payment Details</h2>
                 <div class="payment-box" style="background: #f8faff; padding: 20px; border-radius: 10px; border: 2px solid #1a56db;">
                     <p style="font-size: 18px; font-weight: bold; color: #1a56db;">📌 Send payment to:</p>
-                    <p><strong>🏦 Bank:access bank</strong> <span style="color: #1a56db; font-size: 18px;">[YOUR BANK NAME]</span></p>
-                    <p><strong>👤 Account Name:kamadioyepeter</strong> <span style="color: #1a56db; font-size: 18px;">[YOUR FULL NAME]</span></p>
-                    <p><strong>🔢 Account Number:1501533082</strong> <span style="color: #1a56db; font-size: 24px; font-weight: bold;">[YOUR ACCOUNT NUMBER]</span></p>
+                    
+                    <!-- BANK DETAILS - VISIBLE AND DYNAMIC -->
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p><strong>🏦 Bank:</strong> <span id="bankName" style="color: #1a56db; font-size: 18px;">Access Bank</span></p>
+                        <p><strong>👤 Account Name:</strong> <span id="accHolderName" style="color: #1a56db; font-size: 18px; font-weight: bold;">kamadioyepeter</span></p>
+                        <p><strong>🔢 Account Number:</strong> <span id="accNumber" style="color: #d32f2f; font-size: 28px; font-weight: bold; letter-spacing: 2px; background: #fff3e0; padding: 4px 12px; border-radius: 6px; display: inline-block;">1501533082</span></p>
+                    </div>
+                    
                     <hr style="border: 1px solid #eef2f8; margin: 15px 0;">
                     <p class="note" style="color: #6a7a9a; font-size: 14px;">
                         ⏳ Send your investment amount to this account. 
                         <br>Your investment will be confirmed within 24 hours after payment.
                     </p>
+                    
+                    <!-- COPY BUTTON FOR EASY COPYING -->
+                    <button onclick="copyAccountNumber()" style="background: #1a56db; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin-top: 10px;">
+                        📋 Copy Account Number
+                    </button>
                 </div>
             </div>
         </div>
