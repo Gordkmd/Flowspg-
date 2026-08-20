@@ -99,6 +99,81 @@ function logout() {
 }
 
 // ============================================
+// 🔑 FORGOT PASSWORD FUNCTIONS
+// ============================================
+function sendResetLink() {
+    const email = document.getElementById('resetEmail').value.trim();
+    const users = getUsers();
+    const user = users.find(u => u.email === email || u.phone === email);
+    
+    const messageDiv = document.getElementById('resetMessage');
+    
+    if (!user) {
+        messageDiv.style.display = 'block';
+        messageDiv.style.background = '#f8d7da';
+        messageDiv.style.color = '#721c24';
+        messageDiv.style.border = '1px solid #f5c6cb';
+        messageDiv.innerHTML = '❌ No account found with this email or phone number.';
+        return;
+    }
+    
+    // Store the user's email for password reset
+    localStorage.setItem('flowspg_reset_email', user.email);
+    
+    messageDiv.style.display = 'block';
+    messageDiv.style.background = '#d4edda';
+    messageDiv.style.color = '#155724';
+    messageDiv.style.border = '1px solid #c3e6cb';
+    messageDiv.innerHTML = '✅ Reset link sent! <a href="reset-password.html" style="color: #1a56db; font-weight: bold;">Click here to reset your password</a>';
+}
+
+function resetPassword() {
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmNewPassword').value;
+    
+    const resetEmail = localStorage.getItem('flowspg_reset_email');
+    
+    if (!resetEmail) {
+        alert('Session expired. Please request a new reset link.');
+        window.location.href = 'forgot-password.html';
+        return;
+    }
+    
+    if (newPassword.length < 6) {
+        alert('Password must be at least 6 characters!');
+        return;
+    }
+    
+    if (newPassword !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+    }
+    
+    const users = getUsers();
+    const userIndex = users.findIndex(u => u.email === resetEmail);
+    
+    if (userIndex === -1) {
+        alert('User not found. Please try again.');
+        return;
+    }
+    
+    // Update password
+    users[userIndex].password = newPassword;
+    saveUsers(users);
+    
+    // Clear reset session
+    localStorage.removeItem('flowspg_reset_email');
+    
+    const successDiv = document.getElementById('resetSuccess');
+    successDiv.style.display = 'block';
+    successDiv.innerHTML = '✅ Password reset successfully! You can now <a href="login.html" style="color: #1a56db; font-weight: bold;">login with your new password</a>.';
+    
+    // Clear form
+    document.getElementById('newPassword').value = '';
+    document.getElementById('confirmNewPassword').value = '';
+}
+
+// ============================================
 // 📈 DASHBOARD FUNCTIONS
 // ============================================
 function loadDashboard() {
@@ -176,7 +251,7 @@ function selectPackage(amount) {
         payments.push(payment);
         savePayments(payments);
         
-        alert(`✅ Investment of ₦${amount.toLocaleString()} created!\n\nSend payment to:\nBank: Access Bank\nAccount: 1234567890\nName: Flows PG Investment\n\nYour investment will be confirmed within 24 hours.`);
+        alert(`✅ Investment of ₦${amount.toLocaleString()} created!\n\nSend payment to your bank details shown below.\n\nYour investment will be confirmed within 24 hours.`);
         
         loadDashboard();
     }
@@ -199,7 +274,7 @@ function dailyCheckin() {
     
     if (todayCheckin) {
         document.getElementById('checkinMessage').textContent = '✅ You already checked in today! Come back tomorrow.';
-        document.getElementById('checkinMessage').style.color = '#f0c040';
+        document.getElementById('checkinMessage').style.color = '#f0a030';
         return;
     }
     
@@ -237,7 +312,7 @@ function dailyCheckin() {
     }
     
     document.getElementById('checkinMessage').textContent = `✅ Check-in successful! You earned ₦${bonus.toLocaleString()}!`;
-    document.getElementById('checkinMessage').style.color = '#00d26a';
+    document.getElementById('checkinMessage').style.color = '#1a56db';
     
     setTimeout(() => loadDashboard(), 1500);
 }
@@ -246,6 +321,7 @@ function dailyCheckin() {
 // 📝 FORM HANDLERS
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
+    // Register Form
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
         registerForm.addEventListener('submit', function(e) {
@@ -270,6 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Login Form
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
@@ -280,6 +357,25 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Forgot Password Form
+    const forgotForm = document.getElementById('forgotPasswordForm');
+    if (forgotForm) {
+        forgotForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            sendResetLink();
+        });
+    }
+    
+    // Reset Password Form
+    const resetForm = document.getElementById('resetPasswordForm');
+    if (resetForm) {
+        resetForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            resetPassword();
+        });
+    }
+    
+    // Load dashboard if on dashboard page
     if (document.querySelector('.dashboard-container')) {
         loadDashboard();
     }
