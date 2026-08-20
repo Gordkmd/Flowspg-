@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Flows PG</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">💰 Flows PG</div>
+        <div class="nav-links">
+            <span id="userName">Welcome, User</span>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-menu">
+                <a href="#" class="active">📊 Dashboard</a>
+                <a href="#">📈 My Investments</a>
+                <a href="#">💰 Check-in</a>
+                <a href="#">📤 Withdraw</a>
+                <a href="#">📋 History</a>
+                <a href="#">⚙️ Settings</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="dashboard-main">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Balance</h3>
+                    <div class="stat-value" id="totalBalance">₦0.00</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Earned</h3>
+                    <div class="stat-value" id="totalEarned">₦0.00</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Today's Bonus</h3>
+                    <div class="stat-value" id="todayBonus">₦0.00</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Check-in Streak</h3>
+                    <div class="stat-value" id="streakCount">0 Days</div>
+                </div>
+            </div>
+
+            <!-- Investment Packages -->
+            <div class="dashboard-section">
+                <h2>📊 Available Investment Packages</h2>
+                <div class="invest-grid">
+                    <div class="invest-card" onclick="selectPackage(3000)">
+                        <h4>Bronze</h4>
+                        <p class="amount">₦3,000</p>
+                        <p class="bonus">Daily: ₦500</p>
+                        <button class="btn btn-small">Invest</button>
+                    </div>
+                    <div class="invest-card" onclick="selectPackage(10000)">
+                        <h4>Silver</h4>
+                        <p class="amount">₦10,000</p>
+                        <p class="bonus">Daily: ₦1,500</p>
+                        <button class="btn btn-small">Invest</button>
+                    </div>
+                    <div class="invest-card" onclick="selectPackage(50000)">
+                        <h4>Gold</h4>
+                        <p class="amount">₦50,000</p>
+                        <p class="bonus">Daily: ₦7,500</p>
+                        <button class="btn btn-small">Invest</button>
+                    </div>
+                    <div class="invest-card" onclick="selectPackage(100000)">
+                        <h4>Platinum</h4>
+                        <p class="amount">₦100,000</p>
+                        <p class="bonus">Daily: ₦15,000</p>
+                        <button class="btn btn-small">Invest</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Check-in -->
+            <div class="dashboard-section">
+                <h2>✅ Daily Check-in</h2>
+                <div class="checkin-box">
+                    <p>Check in daily to earn your bonus!</p>
+                    <button class="btn btn-primary" id="checkinBtn" onclick="dailyCheckin()">Check In Now</button>
+                    <p id="checkinMessage"></p>
+                </div>
+            </div>
+
+            <!-- Payment Confirmation -->
+            <div class="dashboard-section">
+                <h2>💳 Payment Details</h2>
+                <div class="payment-box">
+                    <p><strong>Bank:</strong> Access Bank</p>
+                    <p><strong>Account Name:</strong> Flows PG Investment</p>
+                    <p><strong>Account Number:</strong> 1234567890</p>
+                    <p class="note">Send your investment amount to this account. Your investment will be confirmed within 24 hours.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
